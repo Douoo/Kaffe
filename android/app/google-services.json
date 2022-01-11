@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "488241831464",
+    "project_id": "kaffe---review-mining-app",
+    "storage_bucket": "kaffe---review-mining-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488241831464:android:1d08d3922d77af16ab9f1d",
+        "android_client_info": {
+          "package_name": "com.kaffe.kaffe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488241831464-qbfpj17rgmu6gmu9bgtqqp0hlloo30tt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqvMi38SY94soRwWLFl3frOfy1pY-cOa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488241831464-qbfpj17rgmu6gmu9bgtqqp0hlloo30tt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
