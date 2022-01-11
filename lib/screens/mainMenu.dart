@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kaffe/screens/home/favorites.dart';
+import 'package:kaffe/screens/home/saved.dart';
 import 'package:kaffe/screens/home/settings.dart';
 import 'package:kaffe/utils/constants.dart';
 
@@ -17,7 +17,7 @@ class _MainMenuState extends State<MainMenu> {
   int _currentNavIndex = 0;
   final tabs = const [
     Restaurants(),
-    Favorite(),
+    SavedRestaurants(),
     Setting(),
   ];
 

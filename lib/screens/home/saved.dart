@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kaffe/utils/constants.dart';
 
-class Favorite extends StatelessWidget {
+class SavedRestaurants extends StatelessWidget {
   static const String route = "favorite";
-  const Favorite({Key key}) : super(key: key);
+  const SavedRestaurants({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class Favorite extends StatelessWidget {
         backgroundColor: kWhiteColor,
         automaticallyImplyLeading: false,
         title: const Text(
-          "Favorite",
+          "SavedRestaurants",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,

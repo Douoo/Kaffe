@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/button.dart';
 import 'package:kaffe/models/filter.dart';
 import 'package:kaffe/utils/constants.dart';
-import 'package:kaffe/widgets/button.dart';
 import '../../../models/values.dart' as hardcoded;
 
 import 'dart:math' as math;

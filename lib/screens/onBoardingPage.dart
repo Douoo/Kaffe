@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/button.dart';
 import 'package:kaffe/screens/MainMenu.dart';
 import 'package:kaffe/utils/constants.dart';
-import 'package:kaffe/widgets/button.dart';
 import '../../utils/size_config.dart';
 
 class OnBoardingPage extends StatefulWidget {

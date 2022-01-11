@@ -4,13 +4,14 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/card.dart';
+import 'package:kaffe/components/list_empty.dart';
+import 'package:kaffe/components/load_indicator.dart';
 import 'package:kaffe/models/filter.dart';
 import 'package:kaffe/models/restaurant.dart';
 import 'package:kaffe/screens/home/restaurant_page.dart';
 import 'package:kaffe/screens/home/restaurant_page/filter_restaurants.dart';
 import 'package:kaffe/utils/constants.dart';
-import 'package:kaffe/widgets/card.dart';
-import 'package:kaffe/widgets/list_empty.dart';
 
 import '../../models/data.dart' as data;
 
@@ -114,7 +115,7 @@ class _RestaurantsState extends State<Restaurants> {
         ),
         body: Container(
           child: _isLoading
-              ? const CircularProgressIndicator()
+              ? ShimmerProgressIndicator()
               : _restaurants.isNotEmpty
                   ? ListView.builder(itemBuilder: (context, index) {
                       return RestaurantCard(

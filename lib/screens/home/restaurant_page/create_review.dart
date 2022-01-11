@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/button.dart';
 import 'package:kaffe/models/review.dart';
 import 'package:kaffe/utils/constants.dart';
-import 'package:kaffe/widgets/button.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ReviewCreateDialog extends StatefulWidget {
