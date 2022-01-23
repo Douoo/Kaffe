@@ -67,7 +67,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     color: kPrimaryColor,
                     textColor: kWhiteColor,
                     title: 'GET STARTED',
-                  )
+                  ),
                 ],
               ),
             )

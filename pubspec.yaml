@@ -40,6 +40,7 @@ dependencies:
   sliver_fab: ^1.0.0
   shimmer: ^2.0.0
   hive: ^2.0.5
+  font_awesome_flutter: ">= 4.7.0"
 
 dev_dependencies:
   flutter_test:
