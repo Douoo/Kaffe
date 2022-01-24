@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kaffe/screens/home/restaurant_page/filter_restaurants.dart';
+import 'package:kaffe/screens/home/setting_page/forgot_password.dart';
+import 'package:kaffe/screens/home/setting_page/login_with_email.dart';
+import 'package:kaffe/screens/home/setting_page/signInPage.dart';
+import 'package:kaffe/screens/home/setting_page/signup_with_email.dart';
 
 import 'screens/MainMenu.dart';
 import 'screens/home/restaurants.dart';
@@ -25,7 +29,11 @@ class Kaffe extends StatelessWidget {
         Restaurants.route: (context) => const Restaurants(),
         SavedRestaurants.route: (context) => const SavedRestaurants(),
         Setting.route: (context) => const Setting(),
-        FilterRestaurant.route: (context) => const FilterRestaurant()
+        FilterRestaurant.route: (context) => const FilterRestaurant(),
+        SignInPage.route: (context) => const SignInPage(),
+        SignUpWithEmail.route: (context) => const SignUpWithEmail(),
+        LogInWithEmail.route: (context) => const LogInWithEmail(),
+        ForgotPassword.route: (context) => const ForgotPassword()
       },
     );
   }
