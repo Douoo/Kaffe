@@ -1,7 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/button.dart';
+import 'package:kaffe/components/terms_and_condition.dart';
 import 'package:kaffe/screens/home/setting_page/signup_with_email.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:kaffe/utils/size_config.dart';
 
 import 'login_with_email.dart';
 
@@ -18,26 +21,8 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
-        elevation: 1.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context, true);
-          },
-          icon: const Icon(
-            Icons.arrow_back_sharp,
-            size: 25.0,
-            color: kBlackColor,
-          ),
-        ),
-        title: const Text(
-          'ACCOUNT',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-            color: kBlackColor,
-          ),
-        ),
+        elevation: 1,
+        title: Text('ACCOUNT', style: Theme.of(context).textTheme.bodyText1),
       ),
       body: SafeArea(
         child: Container(
@@ -52,174 +37,50 @@ class _SignInPageState extends State<SignInPage> {
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 30.0,
-                  color: kBlackColor,
-                  wordSpacing: 1.0,
-                  letterSpacing: 0.5,
                   height: 1.0,
                 ),
               ),
               const SizedBox(height: 30.0),
-              const Text(
+              Text(
                 'Easily manage your posts, favorite restaurants and more personalized settings.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13.0,
-                  color: kBlackColor,
-                  height: 2.0,
-                ),
+                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: Colors.grey,
+                      height: 2.0,
+                    ),
               ),
               const SizedBox(height: 30.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, LogInWithEmail.route);
+                  TextBasedButton(
+                    onPress: () =>
+                        Navigator.pushNamed(context, LogInWithEmail.route),
+                    placeholder: "CONTINUE WITH EMAIL",
+                  ),
+                  const SizedBox(height: 18.0),
+                  TextButtonWithIconImage(
+                    buttonColor: Color(0xFFEEEEEE),
+                    iconImage: 'assets/images/google-logo.png',
+                    onPress: () {
+                      //TODO: Google Signin
                     },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(kPrimaryColor),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 18.0),
-                      child: Text(
-                        'CONTINUE WITH EMAIL',
-                        style: TextStyle(
-                          fontSize: 11.0,
-                          fontWeight: FontWeight.w600,
-                          color: kWhiteColor,
-                        ),
-                      ),
-                    ),
+                    placeholder: 'CONTINUE WITH FACEBOOK',
+                    placeholderColor: kBlackColor,
                   ),
                   const SizedBox(height: 18.0),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.white70),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Image(
-                            image: AssetImage('assets/images/google-logo.png'),
-                          ),
-                          Text(
-                            'CONTINUE WITH GOOGLE',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: kBlackColor,
-                              fontSize: 11.5,
-                            ),
-                          ),
-                          Opacity(
-                            opacity: 0.0,
-                            child: Image(
-                              image:
-                                  AssetImage('assets/images/google-logo.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 18.0),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF385499)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Image(
-                            image:
-                                AssetImage('assets/images/facebook-logo.png'),
-                          ),
-                          Text(
-                            'CONTINUE WITH FACEBOOK',
-                            style: TextStyle(
-                              fontSize: 11.0,
-                              fontWeight: FontWeight.w600,
-                              color: kWhiteColor,
-                            ),
-                          ),
-                          Opacity(
-                            opacity: 0.0,
-                            child: Image(
-                              image:
-                                  AssetImage('assets/images/facebook-logo.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  const TextButtonWithIconImage(
+                    buttonColor: Color(0xFF385499),
+                    iconImage: 'assets/images/facebook-logo.png',
+                    onPress: null,
+                    placeholder: 'CONTINUE WITH FACEBOOK',
                   ),
                 ],
               ),
-              const SizedBox(height: 20.0),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'By signing in, you agree with our ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13.0,
-                        color: Colors.black54,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Terms ans Conditions',
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13.0,
-                        color: kPrimaryColor,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          // path to terms and conditions
-                        },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 3.0),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: ' and ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13.0,
-                        color: Colors.black54,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Privacy Policies',
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13.0,
-                        color: kPrimaryColor,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          // path to privacy policies
-                        },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40.0),
+              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              const TermsCondition(),
             ],
           ),
         ),

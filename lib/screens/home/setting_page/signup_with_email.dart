@@ -14,30 +14,19 @@ class SignUpWithEmail extends StatefulWidget {
 }
 
 class _SignUpWithEmailState extends State<SignUpWithEmail> {
-  bool _obscureText = false;
+  FocusNode _focusOnName;
+  FocusNode _focusOnEmailField;
+  FocusNode _focusOnPasswordField;
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
-        elevation: 2.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context, true);
-          },
-          icon: const Icon(
-            Icons.arrow_back_sharp,
-            size: 25.0,
-            color: kBlackColor,
-          ),
-        ),
-        title: const Text(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
           'Sign Up',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-            color: kBlackColor,
-          ),
+          style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
       resizeToAvoidBottomInset: false,
@@ -55,35 +44,49 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        icon: Icon(Icons.person),
+                      focusNode: _focusOnName,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (term) {
+                        fieldFocusChange(
+                            context, _focusOnName, _focusOnEmailField);
+                      },
+                      decoration: kTextFieldDecoration.copyWith(
+                        icon: const Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                        ),
                         labelText: 'Name',
                       ),
                     ),
                     const SizedBox(height: 15.0),
                     TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        icon: Icon(Icons.email),
-                        labelText: 'Email',
-                      ),
+                      focusNode: _focusOnEmailField,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (term) {
+                        fieldFocusChange(
+                            context, _focusOnEmailField, _focusOnPasswordField);
+                      },
+                      decoration: kTextFieldDecoration,
                     ),
                     const SizedBox(height: 15.0),
                     TextFormField(
-                      decoration: InputDecoration(
+                      obscureText: _obscureText,
+                      decoration: kTextFieldDecoration.copyWith(
                         border: const UnderlineInputBorder(),
-                        icon: const Icon(Icons.lock),
+                        icon: const Icon(Icons.lock, color: Colors.grey),
                         labelText: 'Password',
                         suffixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.remove_red_eye,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {},
+                          icon: _obscureText
+                              ? Icon(Icons.hide_source, color: kPrimaryColor)
+                              : Icon(
+                                  Icons.remove_red_eye,
+                                  color: Colors.grey,
+                                ),
+                          onPressed: () {
+                            setState(() => _obscureText = !_obscureText);
+                          },
                         ),
                       ),
-                      obscureText: _obscureText,
                     ),
                     const SizedBox(height: 25.0),
                     ElevatedButton(
@@ -134,68 +137,25 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
                       ),
                     ],
                   ),
-                  // const SizedBox(height: 20.0),
-                  // const Text(
-                  //   'Already have account?',
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //     fontWeight: FontWeight.w400,
-                  //     fontSize: 11.0,
-                  //     color: Colors.black54,
-                  //     height: 2.0,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 13.0),
-                  // Container(
-                  //   // height: 50.0,
-                  //   margin: const EdgeInsets.only(bottom: 10.0),
-                  //   decoration: BoxDecoration(
-                  //     border: Border.all(
-                  //       color: kPrimaryColor,
-                  //       width: 2.2,
-                  //     ),
-                  //     borderRadius: BorderRadius.circular(6.0),
-                  //   ),
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.pushNamed(context, LogInWithEmail.route);
-                  //     },
-                  //     style: ButtonStyle(
-                  //       backgroundColor: MaterialStateProperty.all(kWhiteColor),
-                  //     ),
-                  //     child: const Padding(
-                  //       padding: EdgeInsets.symmetric(vertical: 19.0),
-                  //       child: Text(
-                  //         'Login',
-                  //         style: TextStyle(
-                  //           color: kPrimaryColor,
-                  //           fontSize: 11.0,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   const SizedBox(height: 15.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RichText(
                         text: TextSpan(children: [
-                          const TextSpan(
+                          TextSpan(
                             text: 'Already have account? ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 11.5,
-                              color: Colors.black54,
-                            ),
+                            style: Theme.of(context).textTheme.caption,
                           ),
                           TextSpan(
-                              text: ' Login',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13.0,
-                                color: kPrimaryColor,
-                              ),
+                              text: 'Login',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  .copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: kPrimaryColor,
+                                      decoration: TextDecoration.underline),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.pushNamed(

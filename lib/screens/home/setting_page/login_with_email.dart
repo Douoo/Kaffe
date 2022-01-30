@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/button.dart';
 import 'package:kaffe/screens/home/setting_page/forgot_password.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:kaffe/utils/size_config.dart';
 
 import 'signup_with_email.dart';
 
@@ -14,22 +16,17 @@ class LogInWithEmail extends StatefulWidget {
 }
 
 class _LogInWithEmailState extends State<LogInWithEmail> {
+  FocusNode _focusOnEmailField;
+  FocusNode _focusOnPasswordField;
+
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
         elevation: 0.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context, true);
-          },
-          icon: const Icon(
-            Icons.arrow_back_sharp,
-            size: 25.0,
-            color: kBlackColor,
-          ),
-        ),
+        backgroundColor: Colors.transparent,
       ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -39,109 +36,94 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 10.0),
               Form(
                 // key: _formkey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'Welcome back!',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20.0,
-                      ),
+                      style: Theme.of(context).textTheme.headline4,
                     ),
                     const SizedBox(height: 15.0),
-                    const Text(
+                    Text(
                       'Login to continue',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 17.0,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     const SizedBox(height: 15.0),
                     TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        icon: Icon(Icons.email),
-                        labelText: 'Email',
-                      ),
+                      focusNode: _focusOnEmailField,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (term) {
+                        fieldFocusChange(
+                            context, _focusOnEmailField, _focusOnPasswordField);
+                      },
+                      decoration: kTextFieldDecoration,
                     ),
                     const SizedBox(height: 15.0),
                     TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        icon: Icon(Icons.lock),
+                      focusNode: _focusOnPasswordField,
+                      textInputAction: TextInputAction.done,
+                      obscureText: _obscureText,
+                      onFieldSubmitted: (term) {
+                        //TODO: add in the signin function
+                        // fieldFocusChange(
+                        //     context, _signinFunction, _focusOnEmailField);
+                      },
+                      decoration: kTextFieldDecoration.copyWith(
+                        icon: const Icon(Icons.lock, color: Colors.grey),
                         labelText: 'Password',
+                        suffixIcon: IconButton(
+                          icon: _obscureText
+                              ? Icon(Icons.hide_source, color: kPrimaryColor)
+                              : Icon(
+                                  Icons.remove_red_eye,
+                                  color: Colors.grey,
+                                ),
+                          onPressed: () {
+                            setState(() => _obscureText = !_obscureText);
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(height: 15.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, ForgotPassword.route);
-                          },
-                          child: const Text(
-                            'Forgot Password?',
-                            // textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 11.5,
-                              color: kBlackColor,
-                              height: 2.0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, ForgotPassword.route);
+                      },
+                      child: Text(
+                        'Forgot Password?',
+                        textAlign: TextAlign.end,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
                     ),
-                    const SizedBox(height: 20.0),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(kPrimaryColor),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 19.0, horizontal: 10.0),
-                        child: Text(
-                          'CONTINUE',
-                          style: TextStyle(
-                            color: kWhiteColor,
-                            fontSize: 11.0,
-                          ),
-                        ),
-                      ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.02),
+                    const TextBasedButton(
+                      onPress: null,
+                      placeholder: 'CONTINUE',
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 15.0),
               RichText(
-                text: TextSpan(children: [
-                  const TextSpan(
-                    text: 'Not yet registered? ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 11.5,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  TextSpan(
-                      text: ' Create account',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13.0,
-                        color: kPrimaryColor,
+                text: TextSpan(
+                    style: Theme.of(context).textTheme.caption,
+                    children: [
+                      const TextSpan(
+                        text: 'Not yet registered? ',
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pushNamed(context, SignUpWithEmail.route);
-                        }),
-                ]),
+                      TextSpan(
+                          text: 'Create account',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13.0,
+                              color: kPrimaryColor,
+                              decoration: TextDecoration.underline),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Navigator.pushNamed(
+                                context, SignUpWithEmail.route)),
+                    ]),
               ),
             ],
           ),

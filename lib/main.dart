@@ -7,8 +7,10 @@ void main() async {
   await Firebase.initializeApp();
 
   final Future<void> loadedLibrary = await app.loadLibrary();
-  runApp(FutureBuilder(
-    future: loadedLibrary,
-    builder: (context, snapshot) => app.Kaffe(),
-  ));
+  runApp(
+    FutureBuilder(
+      future: loadedLibrary,
+      builder: (context, snapshot) => app.Kaffe(),
+    ),
+  );
 }

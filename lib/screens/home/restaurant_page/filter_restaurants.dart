@@ -133,15 +133,16 @@ class _FilterRestaurantState extends State<FilterRestaurant> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: kWhiteColor,
         centerTitle: true,
-        title: Text("Filter", style: TextStyle(color: kBlackColor)),
+        title: const Text(
+          "Filter",
+        ),
         actions: [
           IconButton(
             onPressed: () => Navigator.pop(context, null),
             icon: Icon(
               Icons.close,
-              color: kBlackColor,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
         ],

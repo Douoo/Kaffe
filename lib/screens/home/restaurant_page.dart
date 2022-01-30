@@ -25,7 +25,6 @@ class RestaurantPage extends StatefulWidget {
 
 class _RestaurantPageState extends State<RestaurantPage> {
   _RestaurantPageState({@required Restaurant restaurant}) {
-    print("rest ${restaurant.id}");
     FirebaseAuth.instance
         .signInAnonymously()
         .then((UserCredential userCredential) {
@@ -130,7 +129,10 @@ class _RestaurantPageState extends State<RestaurantPage> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: const Icon(Icons.close),
+                      icon: const Icon(
+                        Icons.close,
+                        color: kWhiteColor,
+                      ),
                     ),
                     expandedHeight: 160,
                     forceElevated: true,

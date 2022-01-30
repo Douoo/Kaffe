@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/button.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:kaffe/utils/size_config.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key key}) : super(key: key);
@@ -14,49 +16,33 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
-        elevation: 1.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context, true);
-          },
-          icon: const Icon(
-            Icons.arrow_back_sharp,
-            size: 25.0,
-            color: kBlackColor,
-          ),
-        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 5.0),
               Form(
                 // key: _formkey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'Forgot Password',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20.0,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: 15.0),
-                    const Text(
+                    Text(
                       'Enter the email address associated with your Kaffe account and we will send you an email with instructions to reset your password.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 11.5,
-                        color: Colors.black54,
-                        height: 2.3,
-                      ),
+                      style: Theme.of(context).textTheme.caption,
                     ),
                     const SizedBox(height: 15.0),
                     TextFormField(
@@ -66,31 +52,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         labelText: 'Email',
                       ),
                     ),
-                    const SizedBox(height: 15.0),
-                    const SizedBox(height: 15.0),
-                    const SizedBox(height: 20.0),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(kPrimaryColor),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 19.0, horizontal: 10.0),
-                        child: Text(
-                          'CONTINUE',
-                          style: TextStyle(
-                            color: kWhiteColor,
-                            fontSize: 11.0,
-                          ),
-                        ),
-                      ),
-                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.1),
+                    TextBasedButton(
+                      onPress: () {
+                        //TODO: Insert the forget password section here
+                      },
+                      placeholder: 'Continue',
+                    )
                   ],
                 ),
               ),
-              const SizedBox(height: 10.0),
             ],
           ),
         ),

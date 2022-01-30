@@ -136,7 +136,6 @@ class ShowCaseContainer extends StatelessWidget {
                   TextSpan(
                     text: description,
                     style: TextStyle(
-                      color: Colors.black,
                       fontSize: getProportionateScreenWidth(16),
                     ),
                   ),
