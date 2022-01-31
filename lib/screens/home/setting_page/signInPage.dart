@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kaffe/screens/home/setting_page/signup_with_email.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/utils/constants.dart';
 
 import 'login_with_email.dart';
@@ -14,6 +14,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +96,15 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   const SizedBox(height: 18.0),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      dynamic res = await _authService.signInAnonymously();
+                      if (res == null) {
+                        print("not signed in");
+                      } else {
+                        print("signed in");
+                        print(res);
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.white70),
