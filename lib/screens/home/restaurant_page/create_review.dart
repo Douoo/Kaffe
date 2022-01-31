@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kaffe/components/button.dart';
 import 'package:kaffe/models/review.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:kaffe/utils/size_config.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ReviewCreateDialog extends StatefulWidget {
@@ -22,13 +23,16 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: kBlackColor),
         centerTitle: true,
-        title: Text('Add a Review', style: TextStyle(color: Colors.black)),
+        title: Text('Add a Review',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                .copyWith(fontWeight: FontWeight.w400)),
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
@@ -54,22 +58,36 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: TextField(
-                minLines: 5,
-                decoration: InputDecoration.collapsed(
-                  filled: true,
-                  fillColor: kWhiteColor,
-                  hintText: 'Type your review here.',
-                ),
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                onChanged: (value) {
-                  if (mounted) {
-                    setState(() {
-                      review = value;
-                    });
-                  }
-                },
+              child: Column(
+                children: [
+                  TextField(
+                    style: Theme.of(context).textTheme.bodyText2,
+                    minLines: 5,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration.collapsed(
+                      filled: true,
+                      // fillColor: kWhiteColor,
+                      hintText: 'Type your review here.',
+                    ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    onChanged: (value) {
+                      if (mounted) {
+                        setState(() {
+                          review = value;
+                        });
+                      }
+                    },
+                  ),
+                  SizedBox(height: SizeConfig.screenHeight * 0.02),
+                  Text(
+                    'Please try to be polite when giving your feedback to a restaurant. Any usage of explicit words might result in banning your account',
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color: Colors.grey),
+                  )
+                ],
               ),
             ),
           ),
@@ -95,9 +113,6 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
     );
   }
 }
-
-
-
 
 // AlertDialog(
 //       title: Text('Add a Review'),

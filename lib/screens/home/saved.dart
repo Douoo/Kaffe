@@ -9,11 +9,10 @@ class SavedRestaurants extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
         automaticallyImplyLeading: false,
-        title: const Text(
-          "SavedRestaurants",
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          "Saved Places",
+          style: Theme.of(context).textTheme.bodyText1,
         ),
         centerTitle: true,
       ),
@@ -30,16 +29,16 @@ class SavedRestaurants extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: RichText(
                 textAlign: TextAlign.center,
-                text: const TextSpan(
-                  style: TextStyle(color: kBlackColor),
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.caption,
                   children: [
                     TextSpan(
-                        text: "Emm....No Favorites Yet\n",
-                        style: TextStyle(
-                            color: kBlackColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500)),
-                    TextSpan(
+                        text: "Emm....No Favorites Yet\n\n",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(fontWeight: FontWeight.bold)),
+                    const TextSpan(
                         text:
                             "You don't have any favorite restaurants yet. Try adding restaurants that you're interested in")
                   ],

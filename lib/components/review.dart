@@ -29,7 +29,10 @@ class RestaurantReview extends StatelessWidget {
                 Expanded(
                   child: Text(
                     review.userName,
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color: Colors.grey),
                   ),
                 ),
                 StarRating(rating: review.rating, size: 16),
@@ -40,7 +43,8 @@ class RestaurantReview extends StatelessWidget {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                    child: Text(review.text ?? ''),
+                    child: Text(review.text ?? '',
+                        style: Theme.of(context).textTheme.bodyText2),
                   ),
                 ),
               ],

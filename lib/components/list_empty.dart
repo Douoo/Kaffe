@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 typedef EmptyListActionButtonCallback = void Function();
 
 class EmptyListView extends StatelessWidget {
-  EmptyListView({
+  const EmptyListView({
     this.child,
     this.onPressed,
   });
@@ -22,7 +22,7 @@ class EmptyListView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
+          SizedBox(
             width: imageSize,
             height: imageSize,
             child: Image.asset(

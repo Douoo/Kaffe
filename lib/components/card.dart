@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaffe/utils/constants.dart';
 
@@ -80,7 +79,10 @@ class RestaurantCard extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       '${restaurant.category} ● ${restaurant.city}',
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(fontSize: 10, color: Colors.grey),
                     ),
                   ),
                 ],

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color(0xFFEA5C2B);
-const Color kSecondaryColor = Color(0xFFF6D860);
-const Color kBoldColor = Color(0xFFFF7F3F);
+const Color kSecondaryColor = Color(0xFFFF7F3F);
+const Color kYellowColor = Color(0xFFF6D860);
 const Color kWhiteColor = Color(0xFFFFFFFF);
+const Color kGreyColor = Color(0xFFEEEEEE);
 const Color kBlackColor = Color(0xFF000000);
-const Color kTextFormFieldBorderColor = Color(0xFF082032);
+const Color kTextFormFieldBorderColor = Colors.grey;
 const Color kFocusedTextFormFieldBorderColor = Color(0xFF878787);
 
 final List<Map<String, String>> showCaseInfo = [
@@ -41,6 +42,38 @@ const kButtonTextStyle = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.w500,
   fontFamily: 'Roboto-Medium',
+);
+
+const InputDecoration kTextFieldDecoration = InputDecoration(
+  labelText: 'Email',
+  labelStyle: TextStyle(color: Colors.grey),
+  focusColor: kPrimaryColor,
+  hoverColor: kPrimaryColor,
+  icon: Icon(
+    Icons.email,
+    color: Colors.grey,
+  ),
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: kPrimaryColor,
+      style: BorderStyle.solid,
+    ),
+  ),
+  enabledBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: kTextFormFieldBorderColor,
+    ),
+  ),
+  errorBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.red,
+    ),
+  ),
+  focusedErrorBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.red,
+    ),
+  ),
 );
 
 fieldFocusChange(

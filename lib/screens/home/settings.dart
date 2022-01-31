@@ -2,7 +2,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaffe/components/signin_widget.dart';
+import 'package:kaffe/theme/theme_preference.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:kaffe/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 import 'setting_page/signInPage.dart';
 
@@ -20,149 +24,67 @@ class _SettingState extends State<Setting> {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
+
+    SizeConfig().init(context);
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(250.0), // here the desired height
+        preferredSize: Size.fromHeight(
+            getProportionateScreenHeight(250)), // here the desired height
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
           elevation: 0.0,
           flexibleSpace: Container(
             padding: const EdgeInsets.all(18.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const <Widget>[
-                        CircleAvatar(
-                          backgroundColor: kBoldColor,
-                          radius: 33.0,
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.black,
-                            size: 33.0,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 13.0,
-                        ),
-                        Text(
-                          'Not Signed In',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 50.0,
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: kPrimaryColor,
-                          width: 2.2,
-                        ),
-                        borderRadius: BorderRadius.circular(6.0),
-                      ),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              '    Sign In  ',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                            Icon(
-                              Icons.login_outlined,
-                              color: kPrimaryColor,
-                              size: 25,
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, SignInPage.route);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8.0),
-                const Text(
-                  'Sign in to start giving reviews and personalize your favorite foods and restaurants.',
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black54,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
+            child: const NotSignedIn(),
           ),
         ),
       ),
-      body: Container(
-        color: Colors.white,
-        child: ListView(
-          children: [
-            const Divider(),
-            ListTile(
-              title: const Padding(
-                padding: EdgeInsets.only(bottom: 10.0),
-                child: Text('Dark Mode'),
-              ),
-              trailing: Padding(
-                padding: const EdgeInsets.only(top: 3.5),
-                child: CupertinoSwitch(
-                  value: darkModeState,
-                  onChanged: (value) {
-                    darkModeState = value;
-                    setState(() {});
-                  },
-                  activeColor: kPrimaryColor,
-                ),
-              ),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Padding(
-                padding: EdgeInsets.only(bottom: 10.0),
-                child: Text('Analytics'),
-              ),
-              subtitle: const Text(
-                  'To provide you more personalized experince and improve product features, we track analytics about the app'),
-              trailing: CupertinoSwitch(
-                value: analyticsState,
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text('Dark Mode', style: Theme.of(context).textTheme.button),
+            trailing: Padding(
+              padding: const EdgeInsets.only(top: 3.5),
+              child: CupertinoSwitch(
+                value: themeProvider.darkTheme,
                 onChanged: (value) {
-                  analyticsState = value;
-                  setState(() {});
+                  setState(() {
+                    themeProvider.darkTheme = !themeProvider.darkTheme;
+                  });
                 },
                 activeColor: kPrimaryColor,
               ),
             ),
-          ],
-        ),
+          ),
+          const Divider(),
+          ListTile(
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child:
+                  Text('Analytics', style: Theme.of(context).textTheme.button),
+            ),
+            subtitle: Text(
+              'To provide you more personalized experince and improve product features, we track analytics about the app',
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  .copyWith(color: Colors.grey),
+            ),
+            trailing: CupertinoSwitch(
+              value: analyticsState,
+              onChanged: (value) {
+                analyticsState = value;
+                setState(() {});
+              },
+              activeColor: kPrimaryColor,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
-
-
 
 // SafeArea(
 //       child: CustomScrollView(

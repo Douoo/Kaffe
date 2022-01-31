@@ -3,9 +3,9 @@ import 'package:kaffe/models/restaurant.dart';
 import 'package:kaffe/models/star.dart';
 
 class RestaurantAppBar extends StatelessWidget {
-  static final double appBarHeight = 160;
+  static const double appBarHeight = 160;
 
-  RestaurantAppBar({
+  const RestaurantAppBar({
     this.restaurant,
     CloseRestaurantPressedCallback onClosePressed,
   }) : _onPressed = onClosePressed;
@@ -19,7 +19,7 @@ class RestaurantAppBar extends StatelessWidget {
     return SliverAppBar(
       leading: IconButton(
         onPressed: _onPressed,
-        icon: Icon(Icons.close),
+        icon: const Icon(Icons.close),
         iconSize: 32,
       ),
       expandedHeight: appBarHeight,
@@ -45,7 +45,7 @@ class RestaurantAppBar extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: Text(
                     '\$' * restaurant.price,
                     style: TextStyle(
@@ -55,7 +55,7 @@ class RestaurantAppBar extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: 2),
+              padding: const EdgeInsets.only(top: 2),
               child: Text(
                 '${restaurant.category} ● ${restaurant.city}',
                 style: TextStyle(
@@ -72,13 +72,13 @@ class RestaurantAppBar extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    const Color(0x00000000),
-                    const Color(0xAA000000),
+                    Color(0x00000000),
+                    Color(0xAA000000),
                   ],
                 ),
               ),

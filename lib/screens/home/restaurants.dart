@@ -25,7 +25,7 @@ class Restaurants extends StatefulWidget {
 
 class _RestaurantsState extends State<Restaurants> {
   bool _isLoading = true;
-  List<Restaurant> _restaurants = <Restaurant>[];
+  List<Restaurant> _restaurants = [];
   StreamSubscription<QuerySnapshot> _currentSubscription;
   Filter _filter;
 
@@ -59,7 +59,6 @@ class _RestaurantsState extends State<Restaurants> {
         builder: (context) => FilterRestaurant(filter: filterBy),
       ),
     );
-    print("selected ${filter.city}");
 
     if (filter != null) {
       await _currentSubscription?.cancel();
@@ -89,16 +88,13 @@ class _RestaurantsState extends State<Restaurants> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,
-          backgroundColor: kWhiteColor,
-          title: const Text(
-            "Restaurant",
-            style: TextStyle(color: Colors.black),
-          ),
+          title:
+              Text("Restaurant", style: Theme.of(context).textTheme.bodyText1),
           centerTitle: true,
           leading: IconButton(
               icon: Icon(
                 Icons.filter_list,
-                color: kBlackColor,
+                color: Theme.of(context).iconTheme.color,
               ),
               onPressed: () => _onFilterBarPressed(_filter)),
           actions: [
@@ -106,9 +102,9 @@ class _RestaurantsState extends State<Restaurants> {
               onPressed: () {
                 //TODO: insert the search function
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.search_outlined,
-                color: kBlackColor,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ],
@@ -117,19 +113,21 @@ class _RestaurantsState extends State<Restaurants> {
           child: _isLoading
               ? ShimmerProgressIndicator()
               : _restaurants.isNotEmpty
-                  ? ListView.builder(itemBuilder: (context, index) {
-                      return RestaurantCard(
-                          restaurant: _restaurants[index],
-                          onRestaurantPressed: (id) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RestaurantPage(
-                                        restaurant: _restaurants[index])));
-                          }
-                          // onRestaurantPressed: ,
-                          );
-                    })
+                  ? ListView.builder(
+                      itemCount: _restaurants.length,
+                      itemBuilder: (context, index) {
+                        return RestaurantCard(
+                            restaurant: _restaurants[index],
+                            onRestaurantPressed: (id) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RestaurantPage(
+                                          restaurant: _restaurants[index])));
+                            }
+                            // onRestaurantPressed: ,
+                            );
+                      })
                   : EmptyListView(
                       child: Text('Kaffe has no restaurants yet!'),
                       onPressed: _onAddRandomRestaurantsPressed,
