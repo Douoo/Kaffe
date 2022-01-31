@@ -17,7 +17,7 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
   FocusNode _focusOnName;
   FocusNode _focusOnEmailField;
   FocusNode _focusOnPasswordField;
-  bool _obscureText = true;
+  bool _isHidden = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,20 +70,23 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
                     ),
                     const SizedBox(height: 15.0),
                     TextFormField(
-                      obscureText: _obscureText,
+                      obscureText: _isHidden,
                       decoration: kTextFieldDecoration.copyWith(
                         border: const UnderlineInputBorder(),
                         icon: const Icon(Icons.lock, color: Colors.grey),
                         labelText: 'Password',
                         suffixIcon: IconButton(
-                          icon: _obscureText
-                              ? Icon(Icons.hide_source, color: kPrimaryColor)
-                              : Icon(
-                                  Icons.remove_red_eye,
+                          icon: _isHidden
+                              ? const Icon(
+                                  Icons.visibility,
                                   color: Colors.grey,
+                                )
+                              : const Icon(
+                                  Icons.visibility_off,
+                                  color: kPrimaryColor,
                                 ),
                           onPressed: () {
-                            setState(() => _obscureText = !_obscureText);
+                            setState(() => _isHidden = !_isHidden);
                           },
                         ),
                       ),

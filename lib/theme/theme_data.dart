@@ -36,14 +36,14 @@ class ThemeStyle {
               fontFamily: "Roboto",
               fontWeight: FontWeight.normal),
           bodyText2: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
+              color: Colors.black, fontWeight: FontWeight.w400, fontSize: 14),
           headline1: TextStyle(
               fontSize: 96, color: Colors.black, fontWeight: FontWeight.bold),
           headline2: TextStyle(
               fontSize: 60, color: Colors.black, fontWeight: FontWeight.w400),
           headline4: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.w300,
+              fontWeight: FontWeight.w500,
               fontSize: 34,
               letterSpacing: 0.25),
           headline5: TextStyle(
@@ -114,9 +114,9 @@ class ThemeStyle {
       cardColor: Colors.grey.shade900,
       textTheme: const TextTheme(
         bodyText1: TextStyle(
-            color: kWhiteColor, fontWeight: FontWeight.w300, fontSize: 16),
+            color: kWhiteColor, fontWeight: FontWeight.normal, fontSize: 16),
         bodyText2: TextStyle(
-            color: kWhiteColor, fontWeight: FontWeight.w300, fontSize: 14),
+            color: kWhiteColor, fontWeight: FontWeight.w400, fontSize: 14),
         headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
         headline2: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
         headline4: TextStyle(fontWeight: FontWeight.w700, fontSize: 34),

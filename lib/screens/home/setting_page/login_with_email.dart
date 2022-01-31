@@ -19,7 +19,7 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
   FocusNode _focusOnEmailField;
   FocusNode _focusOnPasswordField;
 
-  bool _obscureText = true;
+  bool _isHidden = true;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -64,7 +64,7 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
                     TextFormField(
                       focusNode: _focusOnPasswordField,
                       textInputAction: TextInputAction.done,
-                      obscureText: _obscureText,
+                      obscureText: _isHidden,
                       onFieldSubmitted: (term) {
                         //TODO: add in the signin function
                         // fieldFocusChange(
@@ -74,14 +74,17 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
                         icon: const Icon(Icons.lock, color: Colors.grey),
                         labelText: 'Password',
                         suffixIcon: IconButton(
-                          icon: _obscureText
-                              ? Icon(Icons.hide_source, color: kPrimaryColor)
-                              : Icon(
-                                  Icons.remove_red_eye,
+                          icon: _isHidden
+                              ? const Icon(
+                                  Icons.visibility,
                                   color: Colors.grey,
+                                )
+                              : const Icon(
+                                  Icons.visibility_off,
+                                  color: kPrimaryColor,
                                 ),
                           onPressed: () {
-                            setState(() => _obscureText = !_obscureText);
+                            setState(() => _isHidden = !_isHidden);
                           },
                         ),
                       ),
