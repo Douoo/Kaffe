@@ -25,6 +25,7 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Add a Review',
@@ -60,7 +61,9 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
               child: Column(
                 children: [
                   TextField(
+                    style: Theme.of(context).textTheme.bodyText2,
                     minLines: 5,
+                    textInputAction: TextInputAction.done,
                     decoration: InputDecoration.collapsed(
                       filled: true,
                       // fillColor: kWhiteColor,

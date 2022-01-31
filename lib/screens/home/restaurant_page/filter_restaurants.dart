@@ -42,6 +42,7 @@ class _FilterRestaurantState extends State<FilterRestaurant> {
         DropdownMenuItem<T>(value: values[i], child: Text(labels[i])),
     ];
     return DropdownButton<T>(
+      style: Theme.of(context).textTheme.bodyText1,
       items: items,
       isExpanded: true,
       value: selected,
@@ -134,8 +135,9 @@ class _FilterRestaurantState extends State<FilterRestaurant> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Filter",
+          style: Theme.of(context).textTheme.bodyText1,
         ),
         actions: [
           IconButton(

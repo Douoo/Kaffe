@@ -43,7 +43,10 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
                   children: [
                     Text(
                       'Welcome back!',
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          .copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 15.0),
                     Text(
@@ -89,18 +92,22 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15.0),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, ForgotPassword.route);
                       },
-                      child: Text(
-                        'Forgot Password?',
-                        textAlign: TextAlign.end,
-                        style: Theme.of(context).textTheme.caption,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Text(
+                          'Forgot Password?',
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              .copyWith(fontSize: 12),
+                        ),
                       ),
                     ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.02),
                     const TextBasedButton(
                       onPress: null,
                       placeholder: 'CONTINUE',

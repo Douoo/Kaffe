@@ -126,18 +126,15 @@ class ShowCaseContainer extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: '$title \n',
+                    text: '$title\n\n',
                     style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: getProportionateScreenWidth(24),
-                        fontFamily: 'Roboto-Bold',
                         fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
                     text: description,
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(16),
-                    ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ],
               ),

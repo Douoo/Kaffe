@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kaffe/components/button.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:kaffe/utils/size_config.dart';
 
 import 'login_with_email.dart';
 
@@ -24,20 +26,22 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          'Sign Up',
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
       ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 5.0),
+              Text(
+                'Get started with kaffe!',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
               Form(
                 // key: _formkey,
                 child: Column(
@@ -92,37 +96,27 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
                       ),
                     ),
                     const SizedBox(height: 25.0),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(kPrimaryColor),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 19.0, horizontal: 10.0),
-                        child: Text(
-                          'CONTINUE',
-                          style: TextStyle(
-                            color: kWhiteColor,
-                            fontSize: 11.0,
-                          ),
-                        ),
-                      ),
+                    TextBasedButton(
+                      onPress: () {
+                        //TODO: Add Signup Functionality
+                      },
+                      placeholder: "CONTINUE",
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 30.0),
+              SizedBox(height: SizeConfig.screenHeight * 0.03),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        backgroundColor: const Color(0xFF385499),
-                        radius: 25,
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF385499),
+                          shape: BoxShape.circle,
+                        ),
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           icon: const Icon(FontAwesomeIcons.facebookF),
@@ -130,48 +124,70 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
                           onPressed: () {},
                         ),
                       ),
-                      const SizedBox(width: 15.0),
-                      CircleAvatar(
-                        backgroundColor: Colors.grey[300],
-                        radius: 25,
-                        child: const Image(
-                          image: AssetImage('assets/images/google-logo.png'),
-                        ),
+                      SizedBox(width: SizeConfig.screenHeight * 0.02),
+                      CircularButton(
+                        color: Colors.grey[300],
+                        iconImage: 'assets/images/google-logo.png',
+                        onTap: () {
+                          //TODO: Implement google authentication
+                        },
                       ),
                     ],
                   ),
-                  const SizedBox(height: 15.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                            text: 'Already have account? ',
-                            style: Theme.of(context).textTheme.caption,
-                          ),
-                          TextSpan(
-                              text: 'Login',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: kPrimaryColor,
-                                      decoration: TextDecoration.underline),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushNamed(
-                                      context, LogInWithEmail.route);
-                                }),
-                        ]),
+                  SizedBox(height: SizeConfig.screenHeight * 0.03),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'Already have account? ',
+                        style: Theme.of(context).textTheme.caption,
                       ),
-                    ],
+                      TextSpan(
+                          text: 'Login',
+                          style: Theme.of(context).textTheme.caption.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: kPrimaryColor,
+                              decoration: TextDecoration.underline),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(
+                                  context, LogInWithEmail.route);
+                            }),
+                    ]),
                   ),
                 ],
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CircularButton extends StatelessWidget {
+  final Color color;
+  final String iconImage;
+  final Function onTap;
+  const CircularButton({
+    Key key,
+    @required this.color,
+    @required this.iconImage,
+    @required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+        ),
+        child: Image(
+          image: AssetImage(iconImage),
         ),
       ),
     );
