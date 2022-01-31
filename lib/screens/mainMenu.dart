@@ -3,6 +3,7 @@ import 'package:kaffe/screens/home/saved.dart';
 import 'package:kaffe/screens/home/settings.dart';
 import 'package:kaffe/utils/constants.dart';
 
+import 'home/foods.dart';
 import 'home/restaurants.dart';
 
 class MainMenu extends StatefulWidget {
@@ -16,6 +17,7 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   int _currentNavIndex = 0;
   final tabs = const [
+    Foods(),
     Restaurants(),
     SavedRestaurants(),
     Setting(),
@@ -29,6 +31,7 @@ class _MainMenuState extends State<MainMenu> {
         selectedItemColor: kPrimaryColor,
         type: BottomNavigationBarType.fixed,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.food_bank), label: 'Foods'),
           BottomNavigationBarItem(
               icon: Icon(Icons.explore), label: 'Restaurants'),
           BottomNavigationBarItem(

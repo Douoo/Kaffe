@@ -105,6 +105,55 @@ String getRandomName() {
   return '${_words[firstWord]} ${_words[nextWord]}';
 }
 
+String getRandomRestaurantId() {
+  List<String> restaurantIdList = [
+    'zCXcYUHffLULlZeEPSWH',
+    'uqDhLgMYmZG2TlXCDojG',
+    '0IORKY7CsnyeD0DalNfR',
+    'ynAnhDhCi359JcokBBnP',
+    'xarfKPENQdoWLqgcYnaO',
+    'JADW2cRRnC3wsUelI1cC',
+    'z8IKBc14Pq6ZAJ14Vken',
+    'y7z8qA5J4GHnmtU8dGr8',
+    'wuGu3JoQxUS3N02065nf',
+    'wBQGSii2AHQVJsB2QVBA',
+    'vcdt9eXEgdMOgQTHf8wO',
+    'teszHD87PeVFWVGeC8Rv',
+    'tdEa5siDGdpMwXjCz7cx',
+    't38dBRP70BmsHQc4Y2Li',
+    'stt9EW8N0rd94Cmb078v',
+    'sdvR8A0SdpbvMCroHmxd',
+    'sP3F7gubXqhTMHQ7liHL',
+    'rPFsiWoIdj3zpYgyxaVD',
+  ];
+  return restaurantIdList[Random().nextInt(17) + 1];
+}
+
+String getRandomFoodName() {
+  List<String> foodList = [
+    'Diner',
+    'Fire',
+    'Grill',
+    'Place',
+    'Lewi',
+    'Spot',
+    'Trattoria',
+    'Steakhouse',
+    'Churrasco',
+    'Tavern',
+    'Cafe',
+    'Pop-up',
+    'Yummy',
+    'Belly',
+    'Snack',
+    'Fast',
+    'Turbo',
+    'Hyper',
+    'Prime',
+  ];
+  return foodList[Random().nextInt(17) + 1];
+}
+
 String getRandomCategory() {
   return categories[random.nextInt(categories.length)];
 }

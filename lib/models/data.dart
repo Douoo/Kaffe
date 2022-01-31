@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'filter.dart';
+import 'food.dart';
 import 'restaurant.dart';
 import 'review.dart';
 
@@ -92,4 +93,37 @@ void addRestaurantsBatch(List<Restaurant> restaurants) {
   restaurants.forEach((Restaurant restaurant) {
     addRestaurant(restaurant);
   });
+}
+
+Future<void> addFood(Food food) {
+  final foods = FirebaseFirestore.instance.collection('foods');
+  return foods.add({
+    'category': food.category,
+    'restaurant': food.restaurant,
+    'restaurant_id': food.restaurantID,
+    'name': food.name,
+    'photo': food.photo,
+    'price': food.price,
+    'likes': food.likes
+  });
+}
+
+Stream<QuerySnapshot> loadAllFoods() {
+  return FirebaseFirestore.instance
+      .collection('foods')
+      .orderBy('likes', descending: true)
+      .limit(50)
+      .snapshots();
+}
+
+List<Food> getFoodsFromQuery(QuerySnapshot snapshot) {
+  return snapshot.docs.map((DocumentSnapshot doc) {
+    return Food.fromSnapshot(doc);
+  }).toList();
+}
+
+void addFoodsBatch(List<Food> foods) {
+  for (var food in foods) {
+    addFood(food);
+  }
 }
