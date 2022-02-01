@@ -13,6 +13,7 @@ import 'package:kaffe/models/restaurant.dart';
 import 'package:kaffe/screens/home/restaurant_page.dart';
 // import 'package:kaffe/screens/home/restaurant_page/filter_Foods.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:kaffe/utils/size_config.dart';
 
 import '../../models/data.dart' as data;
 
@@ -84,28 +85,24 @@ class _FoodsState extends State<Foods> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,
-          title: Text("Foods", style: Theme.of(context).textTheme.bodyText1),
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(
-              Icons.filter_list,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            // onPressed: () => _onFilterBarPressed(_filter),
-          ),
+          title: Text("Popular Foods",
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  )),
+          // centerTitle: true,
           actions: [
             IconButton(
-              onPressed: () {
-                //TODO: insert the search function
-              },
               icon: Icon(
-                Icons.search_outlined,
+                Icons.filter_list,
                 color: Theme.of(context).iconTheme.color,
               ),
+              // onPressed: () => _onFilterBarPressed(_filter),
             ),
           ],
         ),
@@ -116,33 +113,116 @@ class _FoodsState extends State<Foods> {
                   ? ListView.builder(
                       itemCount: _foods.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          child: InkWell(
-                              child: SizedBox(
-                                  height: 250,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                            alignment: Alignment.centerLeft,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                    _foods[index].photo),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            child: null),
-                                      ),
-                                    ],
-                                  ))),
-                          // onRestaurantPressed: ,
-                        );
+                        return FoodCard(food: _foods[index]);
                       })
                   : EmptyListView(
                       child: Text('Kaffe has no Foods yet!'),
                       onPressed: _onAddRandomFoodsPressed,
                     ),
         ));
+  }
+}
+
+class FoodCard extends StatelessWidget {
+  const FoodCard({
+    Key key,
+    @required Food food,
+  })  : _food = food,
+        super(key: key);
+
+  final Food _food;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      child: InkWell(
+          child: SizedBox(
+              height: 400,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(_food.photo),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: null),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                _food.name,
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  //TODO: Insert the bookmarking logic here
+                                },
+                                child: const Icon(
+                                  Icons.bookmark_outline,
+                                  color: kPrimaryColor,
+                                )),
+                          ],
+                        ),
+                        Container(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            '${_food.category} ● ${_food.restaurant}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption
+                                .copyWith(fontSize: 10, color: Colors.grey),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                          alignment: Alignment.bottomLeft,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              GestureDetector(
+                                child: Icon(Icons.favorite_outline),
+                                onTap: () {
+                                  //TODO; favorite logic
+                                },
+                              ),
+                              SizedBox(width: SizeConfig.screenWidth * 0.02),
+                              GestureDetector(
+                                child: Icon(Icons.insert_comment_outlined),
+                                onTap: () {
+                                  //TODO; favorite logic
+                                },
+                              ),
+                              SizedBox(width: SizeConfig.screenWidth * 0.02),
+                              GestureDetector(
+                                child: Icon(Icons.share_location),
+                                onTap: () {
+                                  //TODO; favorite logic
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ))),
+      // onRestaurantPressed: ,
+    );
   }
 }
