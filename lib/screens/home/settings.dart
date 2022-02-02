@@ -3,6 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaffe/components/signin_widget.dart';
+import 'package:kaffe/models/user.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/theme/theme_preference.dart';
 import 'package:kaffe/utils/constants.dart';
 import 'package:kaffe/utils/size_config.dart';
@@ -19,13 +21,16 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  var darkModeState = true;
+  AuthService _auth = AuthService();
+  final darkModeState = true;
   var analyticsState = true;
+  // User user;
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeProvider>(context);
-
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    // final user = Provider.of<User>(context);
+    print(_auth.username());
     SizeConfig().init(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -36,11 +41,45 @@ class _SettingState extends State<Setting> {
           elevation: 0.0,
           flexibleSpace: Container(
             padding: const EdgeInsets.all(18.0),
-            child: const NotSignedIn(),
+            child: !_auth.isAnonyomus()
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const CircleAvatar(
+                        backgroundColor: kSecondaryColor,
+                        radius: 33.0,
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: 33.0,
+                        ),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.04,
+                      ),
+                      Text(
+                        '${_auth.username()}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '${_auth.email()}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )
+                : NotSignedIn(),
           ),
         ),
       ),
-      body: ListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
             title: Text('Dark Mode', style: Theme.of(context).textTheme.button),
@@ -58,6 +97,7 @@ class _SettingState extends State<Setting> {
             ),
           ),
           const Divider(),
+          // ignore: avoid_print
           ListTile(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
@@ -80,49 +120,39 @@ class _SettingState extends State<Setting> {
               activeColor: kPrimaryColor,
             ),
           ),
+          !_auth.isAnonyomus()
+              ? Column(
+                  children: [
+                    const Divider(),
+                    ListTile(
+                      title: Text('Logout',
+                          style: Theme.of(context).textTheme.button),
+                      onTap: _auth.signOut,
+                    ),
+                  ],
+                )
+              : const SizedBox(),
         ],
       ),
     );
   }
 }
 
-// SafeArea(
-//       child: CustomScrollView(
-//         slivers: <Widget>[
-//           SliverAppBar(
-//             automaticallyImplyLeading: false,
-//             floating: true,
-//             flexibleSpace: FlexibleSpaceBar(
-//               title: Wrap(
-//                 children: [
-//                   Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Icon(Icons.person),
-//                       Text("Not signed in"),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             expandedHeight: 140,
-//           ),
-//           SliverList(
-//             delegate: SliverChildListDelegate(
-//               [
-//                 ListTile(
-//                   title: Text("Dark mode"),
-//                   trailing: Switch(),
-//                 ),
-//                 ListTile(
-//                   title: Text("Send usage info"),
-//                   subtitle: Text(
-//                       'To provide you more personalized experince and improve product features, we track analytics about the app'),
-//                   trailing: Switch(),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     )
+// class ListTyle extends StatelessWidget {
+//   const ListTyle({
+//     Key key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     SizeConfig().init(context);
+//     return Column(
+//       children: [
+//         const Divider(),
+//         ListTile(
+//           title: Text('Logout', style: Theme.of(context).textTheme.button),
+//         ),
+//       ],
+//     );
+//   }
+// }

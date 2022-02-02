@@ -1,12 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:kaffe/services/auth.dart';
-=======
 import 'package:kaffe/components/button.dart';
 import 'package:kaffe/components/terms_and_condition.dart';
 import 'package:kaffe/screens/home/setting_page/signup_with_email.dart';
->>>>>>> dd817cb55b171371ceb40be33e6550c22f736ee6
 import 'package:kaffe/utils/constants.dart';
 import 'package:kaffe/utils/size_config.dart';
 
@@ -67,57 +64,14 @@ class _SignInPageState extends State<SignInPage> {
                     placeholder: "CONTINUE WITH EMAIL",
                   ),
                   const SizedBox(height: 18.0),
-<<<<<<< HEAD
-                  ElevatedButton(
-                    onPressed: () async {
-                      dynamic res = await _authService.signInAnonymously();
-                      if (res == null) {
-                        print("not signed in");
-                      } else {
-                        print("signed in");
-                        print(res);
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.white70),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Image(
-                            image: AssetImage('assets/images/google-logo.png'),
-                          ),
-                          Text(
-                            'CONTINUE WITH GOOGLE',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: kBlackColor,
-                              fontSize: 11.5,
-                            ),
-                          ),
-                          Opacity(
-                            opacity: 0.0,
-                            child: Image(
-                              image:
-                                  AssetImage('assets/images/google-logo.png'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-=======
                   TextButtonWithIconImage(
                     buttonColor: Color(0xFFEEEEEE),
                     iconImage: 'assets/images/google-logo.png',
                     onPress: () {
                       //TODO: Google Signin
                     },
-                    placeholder: 'CONTINUE WITH FACEBOOK',
+                    placeholder: 'CONTINUE WITH GOOGLE',
                     placeholderColor: kBlackColor,
->>>>>>> dd817cb55b171371ceb40be33e6550c22f736ee6
                   ),
                   const SizedBox(height: 18.0),
                   const TextButtonWithIconImage(

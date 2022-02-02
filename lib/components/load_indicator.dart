@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kaffe/utils/constants.dart';
 import 'package:kaffe/utils/size_config.dart';
 import 'package:shimmer/shimmer.dart';
@@ -75,23 +74,6 @@ class ShimmerProgressIndicator extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class Loading extends StatelessWidget {
-  // const Loading({ Key key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white70,
-      child: const Center(
-        child: SpinKitCircle(
-          color: kPrimaryColor,
-          size: 50,
-        ),
       ),
     );
   }
