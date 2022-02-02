@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/components/button.dart';
 import 'package:kaffe/components/terms_and_condition.dart';
 import 'package:kaffe/screens/home/setting_page/signup_with_email.dart';
@@ -17,6 +18,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +70,7 @@ class _SignInPageState extends State<SignInPage> {
                     onPress: () {
                       //TODO: Google Signin
                     },
-                    placeholder: 'CONTINUE WITH FACEBOOK',
+                    placeholder: 'CONTINUE WITH GOOGLE',
                     placeholderColor: kBlackColor,
                   ),
                   const SizedBox(height: 18.0),

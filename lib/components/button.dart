@@ -108,3 +108,32 @@ class TextBasedButton extends StatelessWidget {
     );
   }
 }
+
+class CircularButton extends StatelessWidget {
+  final Color color;
+  final String iconImage;
+  final Function onTap;
+  const CircularButton({
+    Key key,
+    @required this.color,
+    @required this.iconImage,
+    @required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+        ),
+        child: Image(
+          image: AssetImage(iconImage),
+        ),
+      ),
+    );
+  }
+}

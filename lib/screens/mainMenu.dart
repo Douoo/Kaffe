@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kaffe/models/user.dart';
 import 'package:kaffe/screens/home/saved.dart';
 import 'package:kaffe/screens/home/settings.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 import 'home/restaurants.dart';
 
@@ -23,25 +26,28 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: tabs[_currentNavIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: kPrimaryColor,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.explore), label: 'Restaurants'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_border_outlined), label: 'Saved'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
-        ],
-        currentIndex: _currentNavIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentNavIndex = index;
-          });
-        },
+    return StreamProvider<User>.value(
+      value: AuthService().user,
+      child: Scaffold(
+        body: tabs[_currentNavIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: kPrimaryColor,
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.explore), label: 'Restaurants'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark_border_outlined), label: 'Saved'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
+          ],
+          currentIndex: _currentNavIndex,
+          onTap: (int index) {
+            setState(() {
+              _currentNavIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
