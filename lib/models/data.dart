@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'comment.dart';
 import 'filter.dart';
+import 'food.dart';
 import 'restaurant.dart';
 import 'review.dart';
 
@@ -92,4 +94,75 @@ void addRestaurantsBatch(List<Restaurant> restaurants) {
   restaurants.forEach((Restaurant restaurant) {
     addRestaurant(restaurant);
   });
+}
+
+Future<void> addFood(Food food) {
+  final foods = FirebaseFirestore.instance.collection('foods');
+  return foods.add({
+    'category': food.category,
+    'restaurant': food.restaurant,
+    'restaurant_id': food.restaurantID,
+    'name': food.name,
+    'photo': food.photo,
+    'price': food.price,
+    'likes': food.likes
+  });
+}
+
+Stream<QuerySnapshot> loadAllFoods() {
+  return FirebaseFirestore.instance
+      .collection('foods')
+      .orderBy('likes', descending: true)
+      .limit(50)
+      .snapshots();
+}
+
+List<Food> getFoodsFromQuery(QuerySnapshot snapshot) {
+  return snapshot.docs.map((DocumentSnapshot doc) {
+    return Food.fromSnapshot(doc);
+  }).toList();
+}
+
+Future<Food> getFood(String foodId) {
+  return FirebaseFirestore.instance
+      .collection('foods')
+      .doc(foodId)
+      .get()
+      .then((DocumentSnapshot doc) => Food.fromSnapshot(doc));
+}
+
+void addFoodsBatch(List<Food> foods) {
+  for (var food in foods) {
+    addFood(food);
+  }
+}
+
+//This is for adding the comments in the food
+
+Future<void> addComment({String foodId, Comment comment}) {
+  final food = FirebaseFirestore.instance.collection('foods').doc(foodId);
+  final newComment = food.collection('comments').doc();
+
+  return FirebaseFirestore.instance.runTransaction((Transaction transaction) {
+    return transaction
+        .get(food)
+        .then((DocumentSnapshot doc) => Food.fromSnapshot(doc))
+        .then((Food fresh) {
+      transaction.set(newComment, {
+        'text': comment.text,
+        'userName': comment.userName,
+        'timestamp': comment.timestamp ?? FieldValue.serverTimestamp(),
+        'userId': comment.userId,
+      });
+    });
+  });
+}
+
+Future<void> favoriteFood({String foodId, String userId}) {
+  final food = FirebaseFirestore.instance.collection('foods').doc(foodId);
+  print("adding");
+  food.update({
+    "favorites": {userId: true}
+  });
+  print("added");
 }

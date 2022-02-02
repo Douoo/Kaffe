@@ -6,6 +6,7 @@ import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/utils/constants.dart';
 import 'package:provider/provider.dart';
 
+import 'home/foods.dart';
 import 'home/restaurants.dart';
 
 class MainMenu extends StatefulWidget {
@@ -19,6 +20,7 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   int _currentNavIndex = 0;
   final tabs = const [
+    Foods(),
     Restaurants(),
     SavedRestaurants(),
     Setting(),
@@ -26,28 +28,26 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
-      child: Scaffold(
-        body: tabs[_currentNavIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: kPrimaryColor,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.explore), label: 'Restaurants'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark_border_outlined), label: 'Saved'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
-          ],
-          currentIndex: _currentNavIndex,
-          onTap: (int index) {
-            setState(() {
-              _currentNavIndex = index;
-            });
-          },
-        ),
+    return Scaffold(
+      body: tabs[_currentNavIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: kPrimaryColor,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.food_bank), label: 'Foods'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.explore), label: 'Restaurants'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark_border_outlined), label: 'Saved'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
+        ],
+        currentIndex: _currentNavIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentNavIndex = index;
+          });
+        },
       ),
     );
   }

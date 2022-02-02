@@ -82,6 +82,24 @@ fieldFocusChange(
   FocusScope.of(context).requestFocus(nextFocus);
 }
 
+const kSendButtonTextStyle = TextStyle(
+  color: Colors.lightBlueAccent,
+  fontWeight: FontWeight.bold,
+  fontSize: 18.0,
+);
+
+const kMessageTextFieldDecoration = InputDecoration(
+  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  hintText: 'Add a comment',
+  border: InputBorder.none,
+);
+
+const kMessageContainerDecoration = BoxDecoration(
+  border: Border(
+    top: BorderSide(color: kPrimaryColor, width: 2.0),
+  ),
+);
+
 bool isInvalid(String value) {
   return value.contains("+") ||
       value.contains("_") ||

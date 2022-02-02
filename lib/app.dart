@@ -8,6 +8,7 @@ import 'package:kaffe/theme/theme_preference.dart';
 import 'package:provider/provider.dart' as provider;
 
 import 'screens/MainMenu.dart';
+import 'screens/home/food_page/comment_page.dart';
 import 'screens/home/restaurants.dart';
 import 'screens/home/saved.dart';
 import 'screens/home/settings.dart';
@@ -57,7 +58,8 @@ class _KaffeState extends State<Kaffe> {
             SignInPage.route: (context) => const SignInPage(),
             SignUpWithEmail.route: (context) => const SignUpWithEmail(),
             LogInWithEmail.route: (context) => const LogInWithEmail(),
-            ForgotPassword.route: (context) => const ForgotPassword()
+            ForgotPassword.route: (context) => const ForgotPassword(),
+            CommentScreen.route: (context) => CommentScreen()
           },
         );
       }),
