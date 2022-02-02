@@ -16,6 +16,7 @@ import 'package:kaffe/utils/constants.dart';
 import 'package:kaffe/utils/size_config.dart';
 
 import '../../models/data.dart' as data;
+import 'food_page/comment_page.dart';
 
 class Foods extends StatefulWidget {
   static const String route = "Foods";
@@ -43,6 +44,7 @@ class _FoodsState extends State<Foods> {
         .signInAnonymously()
         .then((UserCredential userCredential) {
       _currentSubscription = data.loadAllFoods().listen(_updateFoods);
+      print(userCredential.user.uid);
     });
   }
 
@@ -158,6 +160,46 @@ class FoodCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                          alignment: Alignment.bottomLeft,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              GestureDetector(
+                                child: _food.isFavorite
+                                    ? Icon(Icons.favorite, color: kPrimaryColor)
+                                    : Icon(Icons.favorite_outline),
+                                onTap: () {
+                                  //TODO; favorite logic
+                                  data.favoriteFood(
+                                      foodId: _food.id,
+                                      userId: "SIu4wpjDAXa85WWvIN4BUvC42T93");
+                                },
+                              ),
+                              SizedBox(width: SizeConfig.screenWidth * 0.02),
+                              GestureDetector(
+                                child: Icon(Icons.insert_comment_outlined),
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CommentScreen(
+                                      food: _food,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: SizeConfig.screenWidth * 0.02),
+                              GestureDetector(
+                                child: Icon(Icons.share_location),
+                                onTap: () {
+                                  //TODO; favorite logic
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
@@ -167,14 +209,6 @@ class FoodCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                             ),
-                            GestureDetector(
-                                onTap: () {
-                                  //TODO: Insert the bookmarking logic here
-                                },
-                                child: const Icon(
-                                  Icons.bookmark_outline,
-                                  color: kPrimaryColor,
-                                )),
                           ],
                         ),
                         Container(
@@ -185,36 +219,6 @@ class FoodCard extends StatelessWidget {
                                 .textTheme
                                 .caption
                                 .copyWith(fontSize: 10, color: Colors.grey),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                          alignment: Alignment.bottomLeft,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: [
-                              GestureDetector(
-                                child: Icon(Icons.favorite_outline),
-                                onTap: () {
-                                  //TODO; favorite logic
-                                },
-                              ),
-                              SizedBox(width: SizeConfig.screenWidth * 0.02),
-                              GestureDetector(
-                                child: Icon(Icons.insert_comment_outlined),
-                                onTap: () {
-                                  //TODO; favorite logic
-                                },
-                              ),
-                              SizedBox(width: SizeConfig.screenWidth * 0.02),
-                              GestureDetector(
-                                child: Icon(Icons.share_location),
-                                onTap: () {
-                                  //TODO; favorite logic
-                                },
-                              ),
-                            ],
                           ),
                         ),
                       ],

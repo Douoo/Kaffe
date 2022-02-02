@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'comment.dart';
 import 'filter.dart';
 import 'food.dart';
 import 'restaurant.dart';
@@ -122,8 +123,46 @@ List<Food> getFoodsFromQuery(QuerySnapshot snapshot) {
   }).toList();
 }
 
+Future<Food> getFood(String foodId) {
+  return FirebaseFirestore.instance
+      .collection('foods')
+      .doc(foodId)
+      .get()
+      .then((DocumentSnapshot doc) => Food.fromSnapshot(doc));
+}
+
 void addFoodsBatch(List<Food> foods) {
   for (var food in foods) {
     addFood(food);
   }
+}
+
+//This is for adding the comments in the food
+
+Future<void> addComment({String foodId, Comment comment}) {
+  final food = FirebaseFirestore.instance.collection('foods').doc(foodId);
+  final newComment = food.collection('comments').doc();
+
+  return FirebaseFirestore.instance.runTransaction((Transaction transaction) {
+    return transaction
+        .get(food)
+        .then((DocumentSnapshot doc) => Food.fromSnapshot(doc))
+        .then((Food fresh) {
+      transaction.set(newComment, {
+        'text': comment.text,
+        'userName': comment.userName,
+        'timestamp': comment.timestamp ?? FieldValue.serverTimestamp(),
+        'userId': comment.userId,
+      });
+    });
+  });
+}
+
+Future<void> favoriteFood({String foodId, String userId}) {
+  final food = FirebaseFirestore.instance.collection('foods').doc(foodId);
+  print("adding");
+  food.update({
+    "favorites": {userId: true}
+  });
+  print("added");
 }

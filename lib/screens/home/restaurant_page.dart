@@ -73,13 +73,15 @@ class _RestaurantPageState extends State<RestaurantPage> {
   List<Review> _reviews = <Review>[];
 
   void _onCreateReviewPressed(BuildContext context) async {
-    final newReview = await showDialog<Review>(
-      context: context,
-      builder: (_) => ReviewCreateDialog(
-        userId: _userId,
-        userName: _userName,
-      ),
-    );
+    final newReview = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ReviewCreateDialog(
+            userId: _userId,
+            userName: _userName,
+          ),
+        ));
+
     if (newReview != null) {
       // Save the review
       return data.addReview(
@@ -113,7 +115,6 @@ class _RestaurantPageState extends State<RestaurantPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Builder(
-          //I changed the layout to a sliverFAB because I thought it might block the reviews from being seen in the bottom
           builder: (context) => SliverFab(
                 floatingWidget: FloatingActionButton(
                   tooltip: 'Add a review',

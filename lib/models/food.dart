@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './values.dart';
 
@@ -14,6 +15,7 @@ class Food {
   final String category;
   final String restaurant;
   final String restaurantID;
+  bool isFavorite;
   final int likes;
   final int price;
   final String photo;
@@ -24,6 +26,7 @@ class Food {
       this.category,
       this.restaurant,
       this.price,
+      this.isFavorite = false,
       this.photo,
       this.restaurantID})
       : id = null,
@@ -37,6 +40,10 @@ class Food {
         category = snapshot.data()['category'],
         restaurant = snapshot.data()['restaurant'],
         restaurantID = snapshot.data()['restaurant_id'],
+        isFavorite = snapshot.data()['favorites'] == null
+            ? false
+            : (snapshot.data()['favorites'] as Map<String, dynamic>)
+                .containsKey(FirebaseAuth.instance.currentUser.uid),
         likes = snapshot.data()['likes'],
         price = snapshot.data()['price'],
         photo = snapshot.data()['photo'],
