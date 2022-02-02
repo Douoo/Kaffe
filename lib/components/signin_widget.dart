@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kaffe/models/user.dart';
 import 'package:kaffe/screens/home/setting_page/signInPage.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/utils/constants.dart';
 import 'package:kaffe/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class NotSignedIn extends StatelessWidget {
-  const NotSignedIn({
+  NotSignedIn({
     Key key,
   }) : super(key: key);
 
@@ -53,7 +56,7 @@ class NotSignedIn extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6.0),
               ),
               child: TextButton.icon(
-                label: Text(
+                label: const Text(
                   'Sign In  ',
                   style: TextStyle(
                     fontSize: 15,
@@ -61,7 +64,7 @@ class NotSignedIn extends StatelessWidget {
                     color: kPrimaryColor,
                   ),
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.login_outlined,
                   color: kPrimaryColor,
                   size: 25,

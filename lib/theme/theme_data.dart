@@ -43,7 +43,7 @@ class ThemeStyle {
               fontSize: 60, color: Colors.black, fontWeight: FontWeight.w400),
           headline4: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 34,
               letterSpacing: 0.25),
           headline5: TextStyle(
@@ -119,7 +119,7 @@ class ThemeStyle {
             color: kWhiteColor, fontWeight: FontWeight.w400, fontSize: 14),
         headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
         headline2: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-        headline4: TextStyle(fontWeight: FontWeight.w700, fontSize: 34),
+        headline4: TextStyle(fontWeight: FontWeight.w600, fontSize: 34),
         headline5: TextStyle(
             fontFamily: 'Roboto-Regular',
             fontSize: 24,

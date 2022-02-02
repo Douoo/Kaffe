@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kaffe/models/user.dart';
 import 'package:kaffe/screens/home/saved.dart';
 import 'package:kaffe/screens/home/settings.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 import 'home/foods.dart';
 import 'home/restaurants.dart';
