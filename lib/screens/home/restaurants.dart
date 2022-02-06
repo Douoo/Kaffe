@@ -37,12 +37,7 @@ class _RestaurantsState extends State<Restaurants> {
   }
 
   _RestaurantsState() {
-    FirebaseAuth.instance
-        .signInAnonymously()
-        .then((UserCredential userCredential) {
-      _currentSubscription =
-          data.loadAllRestaurants().listen(_updateRestaurants);
-    });
+    _currentSubscription = data.loadAllRestaurants().listen(_updateRestaurants);
   }
 
   Future<void> _onAddRandomRestaurantsPressed() async {
@@ -117,16 +112,15 @@ class _RestaurantsState extends State<Restaurants> {
                       itemCount: _restaurants.length,
                       itemBuilder: (context, index) {
                         return RestaurantCard(
-                            restaurant: _restaurants[index],
-                            onRestaurantPressed: (id) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RestaurantPage(
-                                          restaurant: _restaurants[index])));
-                            }
-                            // onRestaurantPressed: ,
-                            );
+                          restaurant: _restaurants[index],
+                          onRestaurantPressed: (id) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RestaurantPage(
+                                        restaurant: _restaurants[index])));
+                          },
+                        );
                       })
                   : EmptyListView(
                       child: Text('Kaffe has no restaurants yet!'),

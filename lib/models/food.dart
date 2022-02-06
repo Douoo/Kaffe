@@ -13,6 +13,7 @@ class Food {
   final String id;
   final String name;
   final String category;
+  final String description;
   final String restaurant;
   final String restaurantID;
   bool isFavorite;
@@ -28,6 +29,7 @@ class Food {
       this.price,
       this.isFavorite = false,
       this.photo,
+      this.description,
       this.restaurantID})
       : id = null,
         likes = 0,
@@ -40,10 +42,13 @@ class Food {
         category = snapshot.data()['category'],
         restaurant = snapshot.data()['restaurant'],
         restaurantID = snapshot.data()['restaurant_id'],
-        isFavorite = snapshot.data()['favorites'] == null
+        description = snapshot.data()['description'],
+        isFavorite = snapshot.data()['likedList'] == null
             ? false
-            : (snapshot.data()['favorites'] as Map<String, dynamic>)
-                .containsKey(FirebaseAuth.instance.currentUser.uid),
+            : (snapshot.data()['likedList'] as List<dynamic>)
+                    .contains(FirebaseAuth.instance.currentUser.uid)
+                ? true
+                : false,
         likes = snapshot.data()['likes'],
         price = snapshot.data()['price'],
         photo = snapshot.data()['photo'],
@@ -51,12 +56,12 @@ class Food {
 
   factory Food.random() {
     return Food._(
-      category: getRandomCategory(),
-      restaurant: getRandomName(),
-      restaurantID: getRandomRestaurantId(),
-      name: getRandomFoodName(),
-      price: Random().nextInt(50) + 1,
-      photo: getRandomPhoto(),
-    );
+        category: getRandomCategory(),
+        restaurant: getRandomName(),
+        restaurantID: getRandomRestaurantId(),
+        name: getRandomFoodName(),
+        price: Random().nextInt(50) + 1,
+        photo: getRandomPhoto(),
+        description: getRandomDescription());
   }
 }

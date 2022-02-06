@@ -96,6 +96,22 @@ void addRestaurantsBatch(List<Restaurant> restaurants) {
   });
 }
 
+Future<void> saveRestaurant(
+    {String restaurantId, String userId, bool isSaved}) {
+  final restaurant =
+      FirebaseFirestore.instance.collection('restaurants').doc(restaurantId);
+  print("the res id = $restaurantId isSaved = $isSaved");
+  if (!isSaved) {
+    restaurant.update({
+      "wishList": FieldValue.arrayUnion([userId])
+    });
+  } else {
+    restaurant.update({
+      "wishList": FieldValue.arrayRemove([userId])
+    });
+  }
+}
+
 Future<void> addFood(Food food) {
   final foods = FirebaseFirestore.instance.collection('foods');
   return foods.add({
@@ -105,7 +121,8 @@ Future<void> addFood(Food food) {
     'name': food.name,
     'photo': food.photo,
     'price': food.price,
-    'likes': food.likes
+    'likes': food.likes,
+    'descrition': food.description,
   });
 }
 
@@ -158,11 +175,39 @@ Future<void> addComment({String foodId, Comment comment}) {
   });
 }
 
-Future<void> favoriteFood({String foodId, String userId}) {
+Future<void> favoriteFood({String foodId, String userId, bool isFavorite}) {
   final food = FirebaseFirestore.instance.collection('foods').doc(foodId);
-  print("adding");
-  food.update({
-    "favorites": {userId: true}
-  });
-  print("added");
+
+  if (!isFavorite) {
+    food.update({
+      "likedList": FieldValue.arrayUnion([userId])
+    });
+  } else {
+    food.update({
+      "likedList": FieldValue.arrayRemove([userId])
+    });
+  }
+
+  //  food.update({
+  //   "favorites": FieldValue.arrayUnion([
+  //     {userId: "true"}
+  //   ])
+  // });
+
+  // food.update({
+  //   "favorites": FieldValue.arrayRemove([
+  //     {userId: "true"}
+  //   ])
+  // });
+
+  // food.update({
+  //   "favorites": FieldValue.arrayRemove([{}.remove(userId)])
+  // });
+
+  // food.get().then((value) {
+  //   print("This is  ${value.data()['favorites']}");
+  //   Map<String, dynamic> val = value.data()['favorites'];
+  //   val.removeWhere((key, value) => key == userId);
+  //   print("done");
+  // });
 }

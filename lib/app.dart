@@ -4,6 +4,7 @@ import 'package:kaffe/screens/home/setting_page/forgot_password.dart';
 import 'package:kaffe/screens/home/setting_page/login_with_email.dart';
 import 'package:kaffe/screens/home/setting_page/signInPage.dart';
 import 'package:kaffe/screens/home/setting_page/signup_with_email.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/theme/theme_preference.dart';
 import 'package:provider/provider.dart' as provider;
 
@@ -24,7 +25,7 @@ class Kaffe extends StatefulWidget {
 
 class _KaffeState extends State<Kaffe> {
   final ThemeProvider _themeProvider = ThemeProvider();
-
+  final AuthService _auth = AuthService();
   void getCurrentAppTheme() async {
     _themeProvider.darkTheme =
         await _themeProvider.darkThemePreference.getTheme();
@@ -47,7 +48,8 @@ class _KaffeState extends State<Kaffe> {
           debugShowCheckedModeBanner: false,
           title: 'Kaffe',
           theme: ThemeStyle.themeData(_themeProvider.darkTheme, context),
-          initialRoute: OnBoardingPage.route,
+          initialRoute:
+              _auth.isAuthenticated() ? MainMenu.route : OnBoardingPage.route,
           routes: {
             OnBoardingPage.route: (context) => OnBoardingPage(),
             MainMenu.route: (context) => const MainMenu(),

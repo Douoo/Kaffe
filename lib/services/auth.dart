@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/foundation.dart';
 import 'package:kaffe/models/user.dart';
 
-class AuthService {
+class AuthService extends ChangeNotifier {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 
   // create function to convert firebase user to custom user
@@ -14,6 +15,19 @@ class AuthService {
 
   String username() {
     return _auth.currentUser.displayName;
+  }
+
+  bool isAuthenticated() {
+    final user = _auth.currentUser;
+    bool userAuthenticated = false;
+    notifyListeners();
+
+    if (user != null) {
+      userAuthenticated = true;
+      notifyListeners();
+    }
+
+    return userAuthenticated;
   }
 
   String email() {

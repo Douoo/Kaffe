@@ -1,16 +1,15 @@
 // ignore_for_file: missing_required_param
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaffe/components/signin_widget.dart';
-import 'package:kaffe/models/user.dart';
-import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/theme/theme_preference.dart';
 import 'package:kaffe/utils/constants.dart';
 import 'package:kaffe/utils/size_config.dart';
 import 'package:provider/provider.dart';
 
-import 'setting_page/signInPage.dart';
+import '../onBoardingPage.dart';
 
 class Setting extends StatefulWidget {
   static const String route = "setting";
@@ -21,7 +20,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  AuthService _auth = AuthService();
+  final _auth = FirebaseAuth.instance;
   final darkModeState = true;
   var analyticsState = true;
   // User user;
@@ -29,8 +28,6 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    // final user = Provider.of<User>(context);
-    print(_auth.username());
     SizeConfig().init(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -41,7 +38,7 @@ class _SettingState extends State<Setting> {
           elevation: 0.0,
           flexibleSpace: Container(
             padding: const EdgeInsets.all(18.0),
-            child: !_auth.isAnonyomus()
+            child: !_auth.currentUser.isAnonymous
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,18 +56,15 @@ class _SettingState extends State<Setting> {
                         height: SizeConfig.screenHeight * 0.04,
                       ),
                       Text(
-                        '${_auth.username()}',
+                        _auth.currentUser.displayName,
                         style: Theme.of(context)
                             .textTheme
-                            .headline6
-                            .copyWith(fontWeight: FontWeight.bold),
+                            .bodyText1
+                            .copyWith(fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        '${_auth.email()}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .copyWith(fontWeight: FontWeight.bold),
+                        _auth.currentUser.email,
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
                   )
@@ -120,14 +114,57 @@ class _SettingState extends State<Setting> {
               activeColor: kPrimaryColor,
             ),
           ),
-          !_auth.isAnonyomus()
+          !_auth.currentUser.isAnonymous
               ? Column(
                   children: [
                     const Divider(),
                     ListTile(
+                      leading: const Icon(Icons.logout),
                       title: Text('Logout',
                           style: Theme.of(context).textTheme.button),
-                      onTap: _auth.signOut,
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Center(
+                                  child: Text('LOG OUT',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                ),
+                                content: const Text(
+                                    'Are you sure you want to log out?',
+                                    textAlign: TextAlign.center),
+                                actions: [
+                                  TextButton(
+                                    child: const Text(
+                                      'CANCEL',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  ),
+                                  TextButton(
+                                      child: const Text(
+                                        'YES',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      onPressed: () => () {
+                                            _auth.signOut().then((_) {
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                  context,
+                                                  OnBoardingPage.route,
+                                                  (route) => false);
+                                            });
+                                          })
+                                ],
+                              );
+                            });
+                      },
                     ),
                   ],
                 )
@@ -137,22 +174,3 @@ class _SettingState extends State<Setting> {
     );
   }
 }
-
-// class ListTyle extends StatelessWidget {
-//   const ListTyle({
-//     Key key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     SizeConfig().init(context);
-//     return Column(
-//       children: [
-//         const Divider(),
-//         ListTile(
-//           title: Text('Logout', style: Theme.of(context).textTheme.button),
-//         ),
-//       ],
-//     );
-//   }
-// }
