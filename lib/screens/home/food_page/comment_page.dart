@@ -141,43 +141,6 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 }
 
-class MessageStream extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('messages').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-                child: CircularProgressIndicator(
-              backgroundColor: Colors.lightBlueAccent,
-            ));
-          }
-          final messages = snapshot.data.docs.reversed;
-          List<CommentBubble> messageBubbles = [];
-          for (var message in messages) {
-            final messageText = message.data()['text'];
-            final messageSender = message.data()['sender'];
-            final currentUser = loggedIn.email;
-
-            final messageBubble = CommentBubble(
-              sender: messageSender,
-              text: messageText,
-              isMe: currentUser == messageSender,
-            );
-            messageBubbles.add(messageBubble);
-          }
-          return Expanded(
-            child: ListView(
-              reverse: true,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              children: messageBubbles,
-            ),
-          );
-        });
-  }
-}
-
 class CommentBubble extends StatelessWidget {
   CommentBubble({this.sender, this.text, this.isMe});
 
@@ -197,7 +160,7 @@ class CommentBubble extends StatelessWidget {
       ),
       subtitle: Text(text, style: Theme.of(context).textTheme.bodyText1),
       title: Text(
-        "$sender ${isMe ? "(You)" : ""}",
+        "$sender",
         style: Theme.of(context)
             .textTheme
             .bodyText2

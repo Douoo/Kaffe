@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kaffe/components/button.dart';
 import 'package:kaffe/screens/MainMenu.dart';
+import 'package:kaffe/services/auth.dart';
 import 'package:kaffe/utils/constants.dart';
 import '../../utils/size_config.dart';
 
@@ -15,6 +16,7 @@ class OnBoardingPage extends StatefulWidget {
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
   int showCaseDots = 0;
+  AuthService _auth = AuthService();
 
   @override
   void initState() {
@@ -61,8 +63,12 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   SizedBox(height: SizeConfig.screenHeight * 0.04),
                   RoundButton(
                     onTap: () {
-                      Navigator.pushNamed(context, MainMenu.route);
-                      // FirebaseAuth.instance.signInAnonymously();
+                      _auth.signInAnonymously().then((_) {
+                        Navigator.pushNamedAndRemoveUntil(
+                                                  context,
+                                                  MainMenu.route,
+                                                  (route) => false);
+                      });
                     },
                     color: kPrimaryColor,
                     textColor: kWhiteColor,
