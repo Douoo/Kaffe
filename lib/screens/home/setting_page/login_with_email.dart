@@ -35,6 +35,7 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
     SizeConfig().init(context);
     return ModalProgressHUD(
       inAsyncCall: _isLoading,
+      color: kPrimaryColor,
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
@@ -137,8 +138,8 @@ class _LogInWithEmailState extends State<LogInWithEmail> {
                             setState(() {
                               _isLoading = false;
                             });
-                            print("user = ${_authService.username()}");
-                            Navigator.pushNamed(context, Setting.route);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, MainMenu.route, (route) => false);
                           });
                         },
                         placeholder: 'CONTINUE',
