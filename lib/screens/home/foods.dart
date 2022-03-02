@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kaffe/components/card.dart';
 import 'package:kaffe/components/list_empty.dart';
 import 'package:kaffe/components/load_indicator.dart';
@@ -32,6 +33,9 @@ class _FoodsState extends State<Foods> {
   StreamSubscription<QuerySnapshot> _currentSubscription;
   Filter _filter;
 
+  //TODO: Change the _auth accessability through the AuthService class
+  final _auth = FirebaseAuth.instance;
+
   void _updateFoods(QuerySnapshot snapshot) {
     setState(() {
       _isLoading = false;
@@ -40,12 +44,9 @@ class _FoodsState extends State<Foods> {
   }
 
   _FoodsState() {
-    FirebaseAuth.instance
-        .signInAnonymously()
-        .then((UserCredential userCredential) {
-      _currentSubscription = data.loadAllFoods().listen(_updateFoods);
-      print(userCredential.user.uid);
-    });
+    final user = _auth.currentUser;
+    _currentSubscription = data.loadAllFoods().listen(_updateFoods);
+    print('from the state ${user.uid}');
   }
 
   Future<void> _onAddRandomFoodsPressed() async {
@@ -115,7 +116,8 @@ class _FoodsState extends State<Foods> {
                   ? ListView.builder(
                       itemCount: _foods.length,
                       itemBuilder: (context, index) {
-                        return FoodCard(food: _foods[index]);
+                        return FoodCard(
+                            food: _foods[index], uid: _auth.currentUser.uid);
                       })
                   : EmptyListView(
                       child: Text('Kaffe has no Foods yet!'),
@@ -129,10 +131,13 @@ class FoodCard extends StatelessWidget {
   const FoodCard({
     Key key,
     @required Food food,
+    @required String uid,
   })  : _food = food,
+        _uid = uid,
         super(key: key);
 
   final Food _food;
+  final _uid;
 
   @override
   Widget build(BuildContext context) {
@@ -169,18 +174,19 @@ class FoodCard extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 child: _food.isFavorite
-                                    ? Icon(Icons.favorite, color: kPrimaryColor)
-                                    : Icon(Icons.favorite_outline),
+                                    ? Icon(FontAwesomeIcons.solidHeart,
+                                        color: kPrimaryColor)
+                                    : Icon(FontAwesomeIcons.heart),
                                 onTap: () {
-                                  //TODO; favorite logic
                                   data.favoriteFood(
                                       foodId: _food.id,
-                                      userId: "SIu4wpjDAXa85WWvIN4BUvC42T93");
+                                      userId: _uid,
+                                      isFavorite: _food.isFavorite);
                                 },
                               ),
-                              SizedBox(width: SizeConfig.screenWidth * 0.02),
+                              SizedBox(width: SizeConfig.screenWidth * 0.03),
                               GestureDetector(
-                                child: Icon(Icons.insert_comment_outlined),
+                                child: Icon(FontAwesomeIcons.commentAlt),
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -190,11 +196,25 @@ class FoodCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: SizeConfig.screenWidth * 0.02),
+                              SizedBox(width: SizeConfig.screenWidth * 0.03),
                               GestureDetector(
                                 child: Icon(Icons.share_location),
                                 onTap: () {
                                   //TODO; favorite logic
+                                },
+                              ),
+                              Spacer(),
+                              TextButton.icon(
+                                icon: const Icon(
+                                  Icons.location_pin,
+                                  color: kSecondaryColor,
+                                ),
+                                label: Text(
+                                  _food.restaurant,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                                onPressed: () {
+                                  //TODO: Insert restaurant location fetch logic
                                 },
                               ),
                             ],
@@ -214,13 +234,15 @@ class FoodCard extends StatelessWidget {
                         Container(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            '${_food.category} ● ${_food.restaurant}',
+                            _food.category,
                             style: Theme.of(context)
                                 .textTheme
                                 .caption
                                 .copyWith(fontSize: 10, color: Colors.grey),
                           ),
                         ),
+                        Text(_food.description,
+                            style: Theme.of(context).textTheme.bodyText1)
                       ],
                     ),
                   ),

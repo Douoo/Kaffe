@@ -105,6 +105,17 @@ String getRandomName() {
   return '${_words[firstWord]} ${_words[nextWord]}';
 }
 
+String getRandomDescription() {
+  List<String> description = [
+    'Portion size is enough for two people',
+    'Who is in for some nice food',
+    'Hands on this tasty dish',
+    'How about you give a try to something new',
+    'With awesome food comes awesome vibe  ',
+  ];
+  return description[random.nextInt(5) + 1];
+}
+
 String getRandomRestaurantId() {
   List<String> restaurantIdList = [
     'zCXcYUHffLULlZeEPSWH',
@@ -126,7 +137,7 @@ String getRandomRestaurantId() {
     'sP3F7gubXqhTMHQ7liHL',
     'rPFsiWoIdj3zpYgyxaVD',
   ];
-  return restaurantIdList[Random().nextInt(17) + 1];
+  return restaurantIdList[random.nextInt(17) + 1];
 }
 
 String getRandomFoodName() {

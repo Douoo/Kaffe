@@ -35,6 +35,7 @@ class _SignUpWithEmailState extends State<SignUpWithEmail> {
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: _isLoading,
+      color: kPrimaryColor,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kaffe/utils/constants.dart';
 
 import '../models/restaurant.dart';
 import '../models/star.dart';
+import '../models/data.dart' as data;
 
 class RestaurantCard extends StatelessWidget {
   RestaurantCard({
@@ -24,17 +26,19 @@ class RestaurantCard extends StatelessWidget {
         height: 250,
         child: Column(
           children: <Widget>[
-            // TODO: Make this a Hero widget so we can transition to it?
             Expanded(
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(restaurant.photo),
-                      fit: BoxFit.cover,
+              child: Hero(
+                tag: restaurant.id,
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(restaurant.photo),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  child: null),
+                    child: null),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(8),
@@ -53,10 +57,16 @@ class RestaurantCard extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            //TODO: Insert the bookmarking logic here
+                            final _uid = FirebaseAuth.instance.currentUser.uid;
+                            data.saveRestaurant(
+                                restaurantId: restaurant.id,
+                                userId: _uid,
+                                isSaved: restaurant.isSaved);
                           },
-                          child: const Icon(
-                            Icons.bookmark_outline,
+                          child: Icon(
+                            restaurant.isSaved
+                                ? Icons.bookmark
+                                : Icons.bookmark_outline,
                             color: kPrimaryColor,
                           )),
                     ],

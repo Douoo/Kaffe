@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './values.dart';
 
@@ -15,11 +16,18 @@ class Restaurant {
   final String city;
   final double avgRating;
   final int numRatings;
+  bool isSaved;
   final int price;
   final String photo;
   final DocumentReference reference;
 
-  Restaurant._({this.name, this.category, this.city, this.price, this.photo})
+  Restaurant._(
+      {this.name,
+      this.category,
+      this.city,
+      this.price,
+      this.photo,
+      this.isSaved = false})
       : id = null,
         numRatings = 0,
         avgRating = 0,
@@ -33,6 +41,12 @@ class Restaurant {
         city = snapshot.data()['city'],
         avgRating = snapshot.data()['avgRating'].toDouble(),
         numRatings = snapshot.data()['numRatings'],
+        isSaved = snapshot.data()['wishList'] == null
+            ? false
+            : (snapshot.data()['wishList'] as List<dynamic>)
+                    .contains(FirebaseAuth.instance.currentUser.uid)
+                ? true
+                : false,
         price = snapshot.data()['price'],
         photo = snapshot.data()['photo'],
         reference = snapshot.reference;
