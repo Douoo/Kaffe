@@ -50,6 +50,7 @@ class Food {
         reference = snapshot.reference;
 
   factory Food.random() {
+    //HERE AS THE METHOD ALREADY INDICATES WE ARE USING THE FACTORY METHOD TO CREATE RESTAURANTS
     return Food._(
       category: getRandomCategory(),
       restaurant: getRandomName(),
