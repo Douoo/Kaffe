@@ -7,6 +7,7 @@ import 'package:kaffe/components/signin_widget.dart';
 import 'package:kaffe/theme/theme_preference.dart';
 import 'package:kaffe/utils/constants.dart';
 import 'package:kaffe/utils/size_config.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 import '../onBoardingPage.dart';
@@ -24,6 +25,7 @@ class _SettingState extends State<Setting> {
   final darkModeState = true;
   var analyticsState = true;
   // User user;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +90,30 @@ class _SettingState extends State<Setting> {
                 },
                 activeColor: kPrimaryColor,
               ),
+            ),
+          ),
+          const Divider(),
+          // ignore: avoid_print
+          ListTile(
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child:
+                  Text('Analytics', style: Theme.of(context).textTheme.button),
+            ),
+            subtitle: Text(
+              'To provide you more personalized experince and improve product features, we track analytics about the app',
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  .copyWith(color: Colors.grey),
+            ),
+            trailing: CupertinoSwitch(
+              value: analyticsState,
+              onChanged: (value) {
+                analyticsState = value;
+                setState(() {});
+              },
+              activeColor: kPrimaryColor,
             ),
           ),
           const Divider(),
