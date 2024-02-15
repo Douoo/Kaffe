@@ -1,5 +1,7 @@
 # Kaffe
 
+![Preview](preview/Showcase.png)
+
 Kaffe is a restaurant and food review mining app that allows you to check on trending restaurants and foods. It allows users to find their best suited restaurants enjoy by giving them the ability to filter out restaurants  based on category, location, ratings and price all accordingly to their interest.
 The main purpose of the app is to let users discover a range of local restaurants based on their choice of location, food category, rating and pricing. The UI/UX  is kept minimal and to the point letting the user achive what they want directly with no fuss.
 
